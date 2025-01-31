@@ -368,6 +368,137 @@ background-color:rgb(0, 0, 0);
         }
       </script>
     </body>
-
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background-color: #f4f4f4;
+        }
+        #login-container {
+          text-align: center;
+        }
+        #login-container h2 {
+          margin-bottom: 20px;
+        }
+        #login-container button {
+          padding: 10px 20px;
+          background-color: #1877f2; /* لون الفيسبوك */
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+        #login-container button:hover {
+          background-color: #165dbb;
+        }
+        #dashboard {
+          display: none;
+          text-align: center;
+        }
+        #dashboard h2 {
+          margin-bottom: 20px;
+        }
+        #dashboard button {
+          padding: 10px 20px;
+          background-color: #dc3545; /* لون تسجيل الخروج */
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+        }
+        #dashboard button:hover {
+          background-color: #c82333;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="login-container">
+        <h2>تسجيل الدخول باستخدام الفيسبوك</h2>
+        <button id="facebook-login">تسجيل الدخول باستخدام الفيسبوك</button>
+      </div>
+    
+      <div id="dashboard">
+        <h2>مرحبًا بك في لوحة التحكم</h2>
+        <p>لقد قمت بتسجيل الدخول بنجاح باستخدام الفيسبوك.</p>
+        <button id="logout-button">تسجيل الخروج</button>
+      </div>
+    
+      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+      <script>
+        // تهيئة Firebase
+        const firebaseConfig = {
+          apiKey: "اولد كاستل",
+          authDomain: "اولد كاستل",
+          projectId: "اولد كاستل",
+          storageBucket: "YOUR_STORAGE_BUCKET",
+          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+          appId: "YOUR_APP_ID"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+    
+        // عناصر الصفحة
+        const loginContainer = document.getElementById('login-container');
+        const dashboard = document.getElementById('dashboard');
+        const facebookLoginButton = document.getElementById('facebook-login');
+        const logoutButton = document.getElementById('logout-button');
+    
+        // تسجيل الدخول باستخدام الفيسبوك
+        facebookLoginButton.addEventListener('click', () => {
+          const provider = new firebase.auth.FacebookAuthProvider();
+          auth.signInWithPopup(provider)
+            .then((result) => {
+              const user = result.user;
+              console.log("تم تسجيل الدخول باستخدام الفيسبوك:", user);
+              localStorage.setItem('user', JSON.stringify(user));
+              showDashboard();
+            })
+            .catch((error) => {
+              console.error("خطأ في تسجيل الدخول باستخدام الفيسبوك:", error.message);
+            });
+        });
+    
+        // تسجيل الخروج
+        logoutButton.addEventListener('click', () => {
+          auth.signOut().then(() => {
+            console.log("تم تسجيل الخروج");
+            localStorage.removeItem('user');
+            showLogin();
+          }).catch((error) => {
+            console.error("خطأ في تسجيل الخروج:", error.message);
+          });
+        });
+    
+        // التحقق من حالة المستخدم عند تحميل الصفحة
+        window.onload = () => {
+          const user = JSON.parse(localStorage.getItem('user'));
+          if (user) {
+            showDashboard();
+          } else {
+            showLogin();
+          }
+        };
+    
+        // وظائف لعرض واجهة المستخدم
+        function showDashboard() {
+          loginContainer.style.display = 'none';
+          dashboard.style.display = 'block';
+        }
+    
+        function showLogin() {
+          loginContainer.style.display = 'block';
+          dashboard.style.display = 'none';
+        }
+      </script>
+    </body>
+    
 
 </html>
