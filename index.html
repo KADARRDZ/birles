@@ -221,284 +221,61 @@ background-color:rgb(0, 0, 0);
 
 
     <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background-color: #f4f4f4;
+        /* CSS */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
         }
-        form {
-          background: #fff;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          width: 300px;
-          text-align: center;
+
+        #loading-text {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
-        input {
-          display: block;
-          width: 100%;
-          margin-bottom: 10px;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+
+        #loading-bar {
+            width: 0%;
+            height: 5px;
+            background-color: white;
+            transition: width 3s ease-in-out;
         }
-        button {
-          width: 100%;
-          padding: 10px;
-          background-color: #007bff;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-        button:hover {
-          background-color: #0056b3;
-        }
-        .hidden {
-          display: none;
-        }
-      </style>
-    </head>
-    <body>
-      <div id="login-container">
-        <form id="login-form">
-          <h2>تسجيل الدخول</h2>
-          <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-          <input type="password" id="password" placeholder="كلمة المرور" required>
-          <button type="submit">تسجيل الدخول</button>
-          <button type="button" id="facebook-login">تسجيل الدخول باستخدام الفيسبوك</button>
-        </form>
-      </div>
-    
-      <div id="dashboard" class="hidden">
-        <h2>مرحبًا بك في لوحة التحكم</h2>
-        <button id="logout-button">تسجيل الخروج</button>
-      </div>
-    
-      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-      <script>
-        // تهيئة Firebase
-        const firebaseConfig = {
-          apiKey: "YOUR_API_KEY",
-          authDomain: "YOUR_AUTH_DOMAIN",
-          projectId: "YOUR_PROJECT_ID",
-          storageBucket: "YOUR_STORAGE_BUCKET",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID"
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <div id="loading-screen">
+        <div id="loading-text">يرجى الانتظار</div>
+        <div id="loading-bar"></div>
+    </div>
+    <!-- JavaScript -->
+    <script>
+        window.onload = function() {
+            var loadingBar = document.getElementById('loading-bar');
+            loadingBar.style.width = '100%';
+
+            setTimeout(function() {
+                var loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.display = 'none';
+
+                // إظهار محتوى الموقع بعد اختفاء شاشة التحميل
+                var content = document.getElementById('content');
+                content.style.display = 'block';
+            }, 10000); // 10000 مللي ثانية = 3 ثواني
         };
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-    
-        // عناصر الصفحة
-        const loginContainer = document.getElementById('login-container');
-        const dashboard = document.getElementById('dashboard');
-        const loginForm = document.getElementById('login-form');
-        const facebookLoginButton = document.getElementById('facebook-login');
-        const logoutButton = document.getElementById('logout-button');
-    
-        // تسجيل الدخول باستخدام البريد الإلكتروني
-        loginForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-    
-          auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-              const user = userCredential.user;
-              console.log("تم تسجيل الدخول:", user);
-              localStorage.setItem('user', JSON.stringify(user));
-              showDashboard();
-            })
-            .catch((error) => {
-              console.error("خطأ في تسجيل الدخول:", error.message);
-            });
-        });
-    
-        // تسجيل الدخول باستخدام الفيسبوك
-        facebookLoginButton.addEventListener('click', () => {
-          const provider = new firebase.auth.FacebookAuthProvider();
-          auth.signInWithPopup(provider)
-            .then((result) => {
-              const user = result.user;
-              console.log("تم تسجيل الدخول باستخدام الفيسبوك:", user);
-              localStorage.setItem('user', JSON.stringify(user));
-              showDashboard();
-            })
-            .catch((error) => {
-              console.error("خطأ في تسجيل الدخول باستخدام الفيسبوك:", error.message);
-            });
-        });
-    
-        // تسجيل الخروج
-        logoutButton.addEventListener('click', () => {
-          auth.signOut().then(() => {
-            console.log("تم تسجيل الخروج");
-            localStorage.removeItem('user');
-            showLogin();
-          }).catch((error) => {
-            console.error("خطأ في تسجيل الخروج:", error.message);
-          });
-        });
-    
-        // التحقق من حالة المستخدم عند تحميل الصفحة
-        window.onload = () => {
-          const user = JSON.parse(localStorage.getItem('user'));
-          if (user) {
-            showDashboard();
-          } else {
-            showLogin();
-          }
-        };
-    
-        // وظائف لعرض واجهة المستخدم
-        function showDashboard() {
-          loginContainer.classList.add('hidden');
-          dashboard.classList.remove('hidden');
-        }
-    
-        function showLogin() {
-          loginContainer.classList.remove('hidden');
-          dashboard.classList.add('hidden');
-        }
-      </script>
-    </body>
-    <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background-color: #f4f4f4;
-        }
-        #login-container {
-          text-align: center;
-        }
-        #login-container h2 {
-          margin-bottom: 20px;
-        }
-        #login-container button {
-          padding: 10px 20px;
-          background-color: #1877f2; /* لون الفيسبوك */
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-        }
-        #login-container button:hover {
-          background-color: #165dbb;
-        }
-        #dashboard {
-          display: none;
-          text-align: center;
-        }
-        #dashboard h2 {
-          margin-bottom: 20px;
-        }
-        #dashboard button {
-          padding: 10px 20px;
-          background-color: #dc3545; /* لون تسجيل الخروج */
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-        }
-        #dashboard button:hover {
-          background-color: #c82333;
-        }
-      </style>
-    </head>
-    <body>
-      <div id="login-container">
-        <h2>تسجيل الدخول باستخدام الفيسبوك</h2>
-        <button id="facebook-login">تسجيل الدخول باستخدام الفيسبوك</button>
-      </div>
-    
-      <div id="dashboard">
-        <h2>مرحبًا بك في لوحة التحكم</h2>
-        <p>لقد قمت بتسجيل الدخول بنجاح باستخدام الفيسبوك.</p>
-        <button id="logout-button">تسجيل الخروج</button>
-      </div>
-    
-      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-      <script>
-        // تهيئة Firebase
-        const firebaseConfig = {
-          apiKey: "اولد كاستل",
-          authDomain: "اولد كاستل",
-          projectId: "اولد كاستل",
-          storageBucket: "YOUR_STORAGE_BUCKET",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID"
-        };
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-    
-        // عناصر الصفحة
-        const loginContainer = document.getElementById('login-container');
-        const dashboard = document.getElementById('dashboard');
-        const facebookLoginButton = document.getElementById('facebook-login');
-        const logoutButton = document.getElementById('logout-button');
-    
-        // تسجيل الدخول باستخدام الفيسبوك
-        facebookLoginButton.addEventListener('click', () => {
-          const provider = new firebase.auth.FacebookAuthProvider();
-          auth.signInWithPopup(provider)
-            .then((result) => {
-              const user = result.user;
-              console.log("تم تسجيل الدخول باستخدام الفيسبوك:", user);
-              localStorage.setItem('user', JSON.stringify(user));
-              showDashboard();
-            })
-            .catch((error) => {
-              console.error("خطأ في تسجيل الدخول باستخدام الفيسبوك:", error.message);
-            });
-        });
-    
-        // تسجيل الخروج
-        logoutButton.addEventListener('click', () => {
-          auth.signOut().then(() => {
-            console.log("تم تسجيل الخروج");
-            localStorage.removeItem('user');
-            showLogin();
-          }).catch((error) => {
-            console.error("خطأ في تسجيل الخروج:", error.message);
-          });
-        });
-    
-        // التحقق من حالة المستخدم عند تحميل الصفحة
-        window.onload = () => {
-          const user = JSON.parse(localStorage.getItem('user'));
-          if (user) {
-            showDashboard();
-          } else {
-            showLogin();
-          }
-        };
-    
-        // وظائف لعرض واجهة المستخدم
-        function showDashboard() {
-          loginContainer.style.display = 'none';
-          dashboard.style.display = 'block';
-        }
-    
-        function showLogin() {
-          loginContainer.style.display = 'block';
-          dashboard.style.display = 'none';
-        }
-      </script>
-    </body>
-    
+    </script>
+</body>
+
+
+
+
 
 </html>
