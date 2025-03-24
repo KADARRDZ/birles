@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <title>   بيرلس     | الموقع الرسمي</title>
+    <title>          Birles | متجر الحسابات</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* التنسيقات العامة */
@@ -13,26 +13,24 @@
             padding-top: 100px;
             color: white;
             
-            /* الخلفية الجديدة مع تأثيرات متقدمة */
             background: 
                 linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 83, 255, 0.3) 100%),
                 url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') 
                 center/cover no-repeat fixed;
             
-            /* تحسينات الأداء */
             background-blend-mode: multiply;
             backdrop-filter: blur(1px);
             -webkit-backdrop-filter: blur(1px);
         }
 
-        /* شريط التحميل المحسن */
+        /* شاشة التحميل الزرقاء */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0d3bb8 0%, #1a1886 100%);
+            background: #1a1886;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,29 +39,7 @@
             transition: opacity 0.5s ease;
         }
 
-        #loading-text {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        #loading-bar-container {
-            width: 300px;
-            height: 8px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        #loading-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #1a53ff, #7289DA);
-            transition: width 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-        }
-
-        /* الأزرار المربعة المحسنة */
+        /* الأزرار المربعة */
         .square-btn {
             position: fixed;
             top: 25px;
@@ -76,7 +52,7 @@
             font-size: 22px;
             font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s ease;
             z-index: 1000;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -88,20 +64,82 @@
             color: white;
         }
 
-        .visa-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(26, 83, 255, 0.6);
-        }
-
         .discord-btn {
             left: 30px;
             background: linear-gradient(135deg, #7289DA 0%, #5a6da8 100%);
             color: white;
         }
 
-        .discord-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(114, 137, 218, 0.6);
+        /* قسم الألعاب - تصميم جديد مربع */
+        .games-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .game-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-image-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .game-card:hover .game-image {
+            transform: scale(1.1);
+        }
+
+        .game-info {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .game-title {
+            font-size: 22px;
+            margin: 0 0 12px 0;
+            color: #f39c12;
+        }
+
+        .game-description {
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
         }
 
         /* المحتوى الرئيسي */
@@ -110,20 +148,23 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 30px;
-            text-align: center;
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 1000px) {
+            .games-container {
+                gap: 20px;
+            }
+            
+            .game-card {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 90px;
-                background-attachment: scroll;
             }
             
             .square-btn {
@@ -133,12 +174,27 @@
                 top: 15px;
             }
             
-            .visa-btn {
-                right: 15px;
+            .game-card {
+                width: 250px;
+                height: 250px;
             }
             
-            .discord-btn {
-                left: 15px;
+            .game-image-container {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .games-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+            
+            .game-card {
+                width: 90%;
+                height: auto;
+                max-width: 350px;
             }
         }
 
@@ -147,17 +203,20 @@
                 width: 90px;
                 height: 45px;
                 font-size: 16px;
-                border-radius: 8px;
             }
             
-            #loading-bar-container {
-                width: 200px;
+            .game-card {
+                width: 95%;
+            }
+            
+            .game-title {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شاشة التحميل المحسنة -->
+    <!-- شاشة التحميل الزرقاء -->
     <div id="loading-screen">
         <div id="loading-text">جاري تحميل الموقع...</div>
         <div id="loading-bar-container">
@@ -165,13 +224,59 @@
         </div>
     </div>
 
-    <!-- الأزرار المربعة المحسنة -->
-    <a href="https://6794ece5312428a00f6e229c--deluxe-stroopwafel-ec94ae.netlify.app/" class="square-btn visa-btn" target="_blank" title="تقديم تأشيرة دخول">تأشيرة</a>
-    <a href="https://discord.com" class="square-btn discord-btn" target="_blank" title="ديسكورد">ديسكورد</a>
+    <!-- الأزرار المربعة -->
+    <a href="#" class="square-btn visa-btn" title="تقديم تأشيرة دخول">تأشيرة</a>
+    <a href="#" class="square-btn discord-btn" title="ديسكورد">ديسكورد</a>
 
     <!-- المحتوى الرئيسي -->
     <div id="content">
-        <!-- مساحة لإضافة المحتوى لاحقًا -->
+        <!-- قسم الألعاب -->
+        <div class="games-container">
+            <!-- بطاقة GTA5 Online -->
+            <div class="game-card">
+                <div class="game-image-container">
+                    <img src="https://pcpraha.cz/wp-content/uploads/2021/06/pocitac-pro-gta-5.jpg" alt="GTA 5 Online" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=GTA+5+Online'">
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">حسابات GTA 5 Online</h3>
+                    <p class="game-description">
+                        حسابات ستيم مع لعبة GTA 5 Online
+                        <br>
+                        متضمنة جميع الإضافات والمال الوفير
+                    </p>
+                </div>
+            </div>
+            
+            <!-- بطاقة Assetto Corsa -->
+            <div class="game-card">
+                <div class="game-image-container">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/244210/header.jpg" alt="Assetto Corsa" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=Assetto+Corsa'">
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">عرض Assetto Corsa</h3>
+                    <p class="game-description">
+                        حسابات ستيم مع لعبة Assetto Corsa
+                        <br>
+                        نسخة كاملة مع جميع DLCs
+                    </p>
+                </div>
+            </div>
+            
+            <!-- بطاقة RUST -->
+            <div class="game-card">
+                <div class="game-image-container">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/252490/header.jpg" alt="RUST" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=RUST'">
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">عرض RUST</h3>
+                    <p class="game-description">
+                        حسابات ستيم مع لعبة RUST
+                        <br>
+                        متوفر بجميع الإصدارات
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -187,7 +292,7 @@
                     loadingScreen.style.display = 'none';
                     document.getElementById('content').style.display = 'block';
                 }, 500);
-            }, 3000);
+            }, 2500);
         };
     </script>
 </body>
