@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <title>          Birles | متجر الحسابات</title>
+    <title>Old Castle | متجر الحسابات</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* التنسيقات العامة */
@@ -39,107 +39,88 @@
             transition: opacity 0.5s ease;
         }
 
+        #loading-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #loading-bar {
+            width: 0%;
+            height: 5px;
+            background: linear-gradient(90deg, #1a53ff, #7289DA);
+            transition: width 3s ease-in-out;
+        }
+
         /* الأزرار المربعة */
         .square-btn {
             position: fixed;
-            top: 25px;
-            width: 140px;
-            height: 65px;
+            top: 20px;
+            width: 120px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            font-size: 22px;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
             text-decoration: none;
             transition: all 0.3s ease;
             z-index: 1000;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .visa-btn {
-            right: 30px;
-            background: linear-gradient(135deg, #1a53ff 0%, #0d3bb8 100%);
+            right: 20px;
+            background: #1a53ff;
             color: white;
         }
 
         .discord-btn {
-            left: 30px;
-            background: linear-gradient(135deg, #7289DA 0%, #5a6da8 100%);
+            left: 20px;
+            background: #7289DA;
             color: white;
         }
 
-        /* قسم الألعاب - تصميم جديد مربع */
+        /* قسم الألعاب - التصميم الأصلي */
         .games-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 15px;
         }
 
         .game-card {
             background: rgba(0, 0, 0, 0.6);
-            border-radius: 12px;
+            border-radius: 10px;
             width: 300px;
-            height: 300px;
-            overflow: hidden;
+            padding: 15px;
+            text-align: center;
             transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .game-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .game-image-container {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: #1a1a2e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .game-image {
             width: 100%;
-            height: 100%;
+            height: 150px;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .game-card:hover .game-image {
-            transform: scale(1.1);
-        }
-
-        .game-info {
-            padding: 20px;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
         }
 
         .game-title {
-            font-size: 22px;
-            margin: 0 0 12px 0;
+            font-size: 20px;
+            margin: 10px 0;
             color: #f39c12;
         }
 
         .game-description {
-            font-size: 15px;
-            line-height: 1.6;
-            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         /* المحتوى الرئيسي */
@@ -147,70 +128,24 @@
             display: none;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px;
+            padding: 20px;
         }
 
         /* التكيف مع الشاشات الصغيرة */
-        @media (max-width: 1000px) {
-            .games-container {
-                gap: 20px;
-            }
-            
-            .game-card {
-                width: 280px;
-                height: 280px;
-            }
-        }
-
         @media (max-width: 768px) {
             body {
-                padding-top: 90px;
+                padding-top: 80px;
             }
             
             .square-btn {
-                width: 110px;
-                height: 55px;
-                font-size: 18px;
-                top: 15px;
-            }
-            
-            .game-card {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .game-image-container {
-                height: 150px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .games-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 25px;
-            }
-            
-            .game-card {
-                width: 90%;
-                height: auto;
-                max-width: 350px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .square-btn {
-                width: 90px;
+                width: 100px;
                 height: 45px;
                 font-size: 16px;
             }
             
             .game-card {
-                width: 95%;
-            }
-            
-            .game-title {
-                font-size: 20px;
+                width: 100%;
+                max-width: 350px;
             }
         }
     </style>
@@ -219,9 +154,7 @@
     <!-- شاشة التحميل الزرقاء -->
     <div id="loading-screen">
         <div id="loading-text">جاري تحميل الموقع...</div>
-        <div id="loading-bar-container">
-            <div id="loading-bar"></div>
-        </div>
+        <div id="loading-bar"></div>
     </div>
 
     <!-- الأزرار المربعة -->
@@ -232,49 +165,34 @@
     <div id="content">
         <!-- قسم الألعاب -->
         <div class="games-container">
-            <!-- بطاقة GTA5 Online -->
+            <!-- بطاقة GTA5 مع الصورة الجديدة -->
             <div class="game-card">
-                <div class="game-image-container">
-                    <img src="https://pcpraha.cz/wp-content/uploads/2021/06/pocitac-pro-gta-5.jpg" alt="GTA 5 Online" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=GTA+5+Online'">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">حسابات GTA 5 Online</h3>
-                    <p class="game-description">
-                        حسابات ستيم مع لعبة GTA 5 Online
-                        <br>
-                        متضمنة جميع الإضافات والمال الوفير
-                    </p>
-                </div>
+                <img src="https://pcpraha.cz/wp-content/uploads/2021/06/pocitac-pro-gta-5.jpg" alt="GTA 5" class="game-image">
+                <h3 class="game-title">متوفر حسابات ستيم GTA5</h3>
+                <p class="game-description">
+                    حسابات ستيم مع لعبة GTA5 كاملة
+                    بأسعار تنافسية مع ضمان 30 يوم
+                </p>
             </div>
             
             <!-- بطاقة Assetto Corsa -->
             <div class="game-card">
-                <div class="game-image-container">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/244210/header.jpg" alt="Assetto Corsa" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=Assetto+Corsa'">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">عرض Assetto Corsa</h3>
-                    <p class="game-description">
-                        حسابات ستيم مع لعبة Assetto Corsa
-                        <br>
-                        نسخة كاملة مع جميع DLCs
-                    </p>
-                </div>
+                <img src="https://cdn.akamai.steamstatic.com/steam/apps/244210/header.jpg" alt="Assetto Corsa" class="game-image">
+                <h3 class="game-title">عرض Assetto Corsa</h3>
+                <p class="game-description">
+                    حسابات ستيم مع لعبة Assetto Corsa
+                    نسخة كاملة مع جميع DLCs
+                </p>
             </div>
             
             <!-- بطاقة RUST -->
             <div class="game-card">
-                <div class="game-image-container">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/252490/header.jpg" alt="RUST" class="game-image" onerror="this.src='https://via.placeholder.com/300x180/1a1a2e/ffffff?text=RUST'">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">عرض RUST</h3>
-                    <p class="game-description">
-                        حسابات ستيم مع لعبة RUST
-                        <br>
-                        متوفر بجميع الإصدارات
-                    </p>
-                </div>
+                <img src="https://cdn.akamai.steamstatic.com/steam/apps/252490/header.jpg" alt="RUST" class="game-image">
+                <h3 class="game-title">عرض RUST</h3>
+                <p class="game-description">
+                    حسابات ستيم مع لعبة RUST
+                    متوفر بجميع الإصدارات
+                </p>
             </div>
         </div>
     </div>
@@ -292,7 +210,7 @@
                     loadingScreen.style.display = 'none';
                     document.getElementById('content').style.display = 'block';
                 }, 500);
-            }, 2500);
+            }, 3000);
         };
     </script>
 </body>
