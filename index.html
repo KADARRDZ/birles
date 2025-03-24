@@ -1,92 +1,107 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <title>  موقع بيرلس  </title>
+    <title>Old Castle | الموقع الرسمي</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* التنسيقات العامة */
         body {
-            background-color: rgb(0, 0, 0);
-            background-image: url('https://cdn.discordapp.com/attachments/1334491392445255690/1334609112503422986/163e6009-e676-4f85-a542-2d17cc6a9fe7.png?ex=679d2718&is=679bd598&hm=76852c9d46ca9944f4e616c5d73d99ab31d9c9e6041b744644aaf032a4773694&');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             min-height: 100vh;
-            padding-top: 100px; /* زيادة البادنج لاستيعاب الأزرار الكبيرة */
+            padding-top: 100px;
+            color: white;
+            
+            /* الخلفية الجديدة مع تأثيرات متقدمة */
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 83, 255, 0.3) 100%),
+                url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') 
+                center/cover no-repeat fixed;
+            
+            /* تحسينات الأداء */
+            background-blend-mode: multiply;
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
         }
 
-        /* شريط التحميل */
+        /* شريط التحميل المحسن */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: blue;
+            background: linear-gradient(135deg, #0d3bb8 0%, #1a1886 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             z-index: 2000;
+            transition: opacity 0.5s ease;
         }
 
         #loading-text {
-            color: white;
             font-size: 24px;
             margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #loading-bar-container {
+            width: 300px;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
         #loading-bar {
             width: 0%;
-            height: 5px;
-            background-color: white;
-            transition: width 3s ease-in-out;
+            height: 100%;
+            background: linear-gradient(90deg, #1a53ff, #7289DA);
+            transition: width 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        /* الأزرار المربعة الثابتة - تم تكبيرها */
+        /* الأزرار المربعة المحسنة */
         .square-btn {
             position: fixed;
-            top: 20px;
-            width: 120px; /* تم التكبير من 60px */
-            height: 60px; /* تم التكبير من 50px */
+            top: 25px;
+            width: 140px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px; /* زوايا أكثر استدارة */
-            font-size: 20px; /* حجم خط أكبر */
+            border-radius: 12px;
+            font-size: 22px;
             font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* ظل أكثر وضوحًا */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .visa-btn {
-            right: 30px; /* تباعد أكبر عن الحافة */
-            background: #1a53ff;
+            right: 30px;
+            background: linear-gradient(135deg, #1a53ff 0%, #0d3bb8 100%);
             color: white;
         }
 
         .visa-btn:hover {
-            background: #0d3bb8;
-            transform: translateY(-3px); /* تأثير أكبر عند التحويم */
-            box-shadow: 0 8px 20px rgba(26, 83, 255, 0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(26, 83, 255, 0.6);
         }
 
         .discord-btn {
-            left: 30px; /* تباعد أكبر عن الحافة */
-            background-color: #7289DA;
+            left: 30px;
+            background: linear-gradient(135deg, #7289DA 0%, #5a6da8 100%);
             color: white;
         }
 
         .discord-btn:hover {
-            background-color: #5a6da8;
-            transform: translateY(-3px); /* تأثير أكبر عند التحويم */
-            box-shadow: 0 8px 20px rgba(114, 137, 218, 0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(114, 137, 218, 0.6);
         }
 
         /* المحتوى الرئيسي */
@@ -94,20 +109,28 @@
             display: none;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            color: white;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* التكيف مع الشاشات الصغيرة */
         @media (max-width: 768px) {
             body {
-                padding-top: 90px; /* تعديل البادنج للجوال */
+                padding-top: 90px;
+                background-attachment: scroll;
             }
             
             .square-btn {
-                width: 100px; /* حجم أصغر قليلاً للجوال */
+                width: 110px;
                 height: 55px;
                 font-size: 18px;
+                top: 15px;
             }
             
             .visa-btn {
@@ -119,30 +142,36 @@
             }
         }
 
-        /* تعديلات للشاشات الصغيرة جدًا */
         @media (max-width: 480px) {
             .square-btn {
                 width: 90px;
-                height: 50px;
+                height: 45px;
                 font-size: 16px;
+                border-radius: 8px;
+            }
+            
+            #loading-bar-container {
+                width: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شاشة التحميل -->
+    <!-- شاشة التحميل المحسنة -->
     <div id="loading-screen">
-        <div id="loading-text">جارٍ التحميل...</div>
-        <div id="loading-bar"></div>
+        <div id="loading-text">جاري تحميل الموقع...</div>
+        <div id="loading-bar-container">
+            <div id="loading-bar"></div>
+        </div>
     </div>
 
-    <!-- الأزرار المربعة الثابتة - بحجم أكبر -->
+    <!-- الأزرار المربعة المحسنة -->
     <a href="https://6794ece5312428a00f6e229c--deluxe-stroopwafel-ec94ae.netlify.app/" class="square-btn visa-btn" target="_blank" title="تقديم تأشيرة دخول">تأشيرة</a>
     <a href="https://discord.com" class="square-btn discord-btn" target="_blank" title="ديسكورد">ديسكورد</a>
 
     <!-- المحتوى الرئيسي -->
     <div id="content">
-        <!-- يمكنك إضافة محتوى هنا لاحقًا -->
+        <!-- مساحة لإضافة المحتوى لاحقًا -->
     </div>
 
     <script>
@@ -152,10 +181,12 @@
 
             setTimeout(function() {
                 var loadingScreen = document.getElementById('loading-screen');
-                loadingScreen.style.display = 'none';
-
-                var content = document.getElementById('content');
-                content.style.display = 'block';
+                loadingScreen.style.opacity = '0';
+                
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                    document.getElementById('content').style.display = 'block';
+                }, 500);
             }, 3000);
         };
     </script>
