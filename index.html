@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <title>Old Castle Website</title>
+    <title>  موقع بيرلس  </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* التنسيقات العامة */
@@ -16,7 +16,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             min-height: 100vh;
-            padding-top: 70px;
+            padding-top: 100px; /* زيادة البادنج لاستيعاب الأزرار الكبيرة */
         }
 
         /* شريط التحميل */
@@ -47,46 +47,46 @@
             transition: width 3s ease-in-out;
         }
 
-        /* الأزرار المربعة الثابتة */
+        /* الأزرار المربعة الثابتة - تم تكبيرها */
         .square-btn {
             position: fixed;
             top: 20px;
-            width: 60px;
-            height: 50px;
+            width: 120px; /* تم التكبير من 60px */
+            height: 60px; /* تم التكبير من 50px */
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px; /* زوايا أكثر استدارة */
+            font-size: 20px; /* حجم خط أكبر */
             font-weight: bold;
             text-decoration: none;
             transition: all 0.3s ease;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* ظل أكثر وضوحًا */
         }
 
         .visa-btn {
-            right: 20px;
+            right: 30px; /* تباعد أكبر عن الحافة */
             background: #1a53ff;
             color: white;
         }
 
         .visa-btn:hover {
             background: #0d3bb8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 83, 255, 0.5);
+            transform: translateY(-3px); /* تأثير أكبر عند التحويم */
+            box-shadow: 0 8px 20px rgba(26, 83, 255, 0.6);
         }
 
         .discord-btn {
-            left: 20px;
+            left: 30px; /* تباعد أكبر عن الحافة */
             background-color: #7289DA;
             color: white;
         }
 
         .discord-btn:hover {
             background-color: #5a6da8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(114, 137, 218, 0.5);
+            transform: translateY(-3px); /* تأثير أكبر عند التحويم */
+            box-shadow: 0 8px 20px rgba(114, 137, 218, 0.6);
         }
 
         /* المحتوى الرئيسي */
@@ -100,18 +100,31 @@
 
         /* التكيف مع الشاشات الصغيرة */
         @media (max-width: 768px) {
+            body {
+                padding-top: 90px; /* تعديل البادنج للجوال */
+            }
+            
             .square-btn {
-                width: 55px;
-                height: 45px;
-                font-size: 14px;
+                width: 100px; /* حجم أصغر قليلاً للجوال */
+                height: 55px;
+                font-size: 18px;
             }
             
             .visa-btn {
-                right: 10px;
+                right: 15px;
             }
             
             .discord-btn {
-                left: 10px;
+                left: 15px;
+            }
+        }
+
+        /* تعديلات للشاشات الصغيرة جدًا */
+        @media (max-width: 480px) {
+            .square-btn {
+                width: 90px;
+                height: 50px;
+                font-size: 16px;
             }
         }
     </style>
@@ -123,7 +136,7 @@
         <div id="loading-bar"></div>
     </div>
 
-    <!-- الأزرار المربعة الثابتة -->
+    <!-- الأزرار المربعة الثابتة - بحجم أكبر -->
     <a href="https://6794ece5312428a00f6e229c--deluxe-stroopwafel-ec94ae.netlify.app/" class="square-btn visa-btn" target="_blank" title="تقديم تأشيرة دخول">تأشيرة</a>
     <a href="https://discord.com" class="square-btn discord-btn" target="_blank" title="ديسكورد">ديسكورد</a>
 
